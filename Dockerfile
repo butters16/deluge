@@ -8,10 +8,6 @@ ENV HOME /root
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
 
-# Fix a Debianism of the nobody's uid being 65534
-RUN usermod -u 99 nobody
-RUN usermod -g 100 nobody
-
 RUN add-apt-repository ppa:deluge-team/ppa
 ADD sources.list /etc/apt/
 RUN apt-get update -qq
@@ -19,7 +15,9 @@ RUN apt-get install -qy deluged deluge-web unrar unzip p7zip
 
 #Path to a directory that only contains the deluge.conf
 VOLUME /config
-VOLUME /downloads
+VOLUME /torrents
+VOLUME /temp
+VOLUME /done
 
 EXPOSE 8112
 EXPOSE 58846
